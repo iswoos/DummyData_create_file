@@ -3,34 +3,33 @@ package com.example.orderinformation.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-//@Entity
+@Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "order_info")
 public class OrderInfo {
-    @Id
-    @GeneratedValue
-    @Column(name = "order_id")
+    @Id @GeneratedValue
     private Long id;
 
-    @Column(name = "product_id")
-    private Long productId;
+//    @Column(name = "product_id")
+//    private Long productId;
 
     @Column(name = "account_id")
     private Long accountId;
 
+    @Column(name = "order_price")
     private Long orderPrice;
 
-    @CreatedDate
+//    @CreatedDate
     private LocalDateTime createdAt;
 
-    public OrderInfo(Long productId, Long accountId, Long orderPrice) {
-        this.productId = productId;
+    public OrderInfo(Long accountId, Long orderPrice, LocalDateTime createdAt) {
         this.accountId = accountId;
         this.orderPrice = orderPrice;
+        this.createdAt = createdAt;
     }
 }
