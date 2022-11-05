@@ -1,18 +1,13 @@
 from faker import Faker
 from sqlalchemy import create_engine
 import sqlalchemy as db
+from random import randint
 import random
 import pandas as pd
 
 
 fake = Faker('ko_KR') # locale 정보 설정
 Faker.seed() # 초기 seed 설정
-
-# name = fake.name()
-# print(name)
-#
-# name = fake.free_email()
-# print(name)
 
 # ======= Reference =======
 # https://velog.io/@seanlee/이커머스-더미데이터-생성
@@ -30,19 +25,16 @@ Faker.seed() # 초기 seed 설정
 # address: 주소
 
 # dummy data count
-repeat_count = 1000
+repeat_count = 100
 
-name = [fake.name() for i in range(repeat_count)]
-email = [fake.unique.free_email() for i in range(repeat_count)] # unique 추가시 고유값 생성
-phone = [
-    ('010-'+str(random.randint(1, 9999)).zfill(4) + '-' + str(random.randint(1, 9999)).zfill(4))
-    for i in range(repeat_count)
-]
+account_id = [randint(1, 100) for i in range(repeat_count)]
+orderPrice = [randint(1000, 1000000) for i in range(repeat_count)]
+created_at = [fake.date_between(start_date = '-1y', end_date ='today') for i in range(repeat_count)]
 
 df = pd.DataFrame()
-df['name'] = name
-df['email'] = email
-df['phone'] = phone
+df['account_id'] = account_id
+df['order_price'] = orderPrice
+df['createdAt'] = created_at
 
 # print(df)
 
@@ -52,12 +44,12 @@ records = df.to_dict(orient='records')
 # print(records)
 
 # <...> 부분은 본인 DB 정보
-engine = create_engine("mysql+mysqldb://<name>:<password>@<host>:3306/<db_name>?charset=utf8mb4")
+engine = create_engine("mysql+mysqldb://root:1207@localhost:3306/recur?charset=utf8mb4")
 
 with engine.connect() as conn:
     metadata = db.MetaData()
 # <table>에는 데이터 형식에 맞게 테이블이 생성되어 있어야 됨 (본인 테이블명 기입)
-    table = db.Table('<table>', metadata, autoload=True, autoload_with=engine)
+    table = db.Table('order_info', metadata, autoload=True, autoload_with=engine)
 
     query = db.insert(table).values(records)
     result_proxy = conn.execute(query)
