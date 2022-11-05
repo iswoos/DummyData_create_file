@@ -39,6 +39,9 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
+    //elasticsearch (검색엔진)
+    implementation 'org.springframework.data:spring-data-elasticsearch:4.4.5'
+
     //aws (S3 빌드)
     implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.4.2'
 
