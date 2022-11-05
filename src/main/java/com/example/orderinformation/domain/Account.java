@@ -14,4 +14,10 @@ public class Account {
     @Id @GeneratedValue
     @Column(name = "account_id")
     private Long id;
+
+    private String name;
+
+    private String contact;
+
+    private String address;
 }
