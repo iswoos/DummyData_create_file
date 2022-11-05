@@ -15,7 +15,6 @@ import javax.persistence.Id;
 public class Product {
     @Id
     @GeneratedValue
-    @Column(name = "account_id")
     private Long id;
 
     private String productName;
