@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
-@Table(name = "order_info2")
+@Table(name = "order_info")
 @EntityListeners(AuditingEntityListener.class)
 public class OrderInfo {
     @Id @GeneratedValue
